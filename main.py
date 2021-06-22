@@ -33,6 +33,14 @@ def new_db():
         print("Connection with links.db closed")
 
 
+def insert_to_db(short_link, long_link):
+    pass
+
+
+def get_from_db(short_link):
+    pass
+
+
 def get_command():
     parser = argparse.ArgumentParser(description='Convert long url to short')
     parser.add_argument('url', type=str, help='Input url!')
@@ -44,9 +52,8 @@ def get_command():
     return argsfromline
 
 
-def get_short_link(long_url):
-    short_link = shortuuid.uuid(name=long_url)
-    print(short_link)
+def get_short_link(long_link):
+    short_link = shortuuid.uuid(name=long_link)
     return short_link
 
 
@@ -54,4 +61,20 @@ if __name__ == '__main__':
     new_db()
     args = get_command()
     get_short_link(args.url)
-    print(args)
+
+    if args.generate:
+        if args.short_url:
+            short_url = args.short_url
+            print(f'short_url={short_url}')
+            insert_to_db(short_url, args.url)
+            # save to DB short and long links. If link exists -> error!
+        else:
+            short_url = get_short_link(args.url)
+            print(f'short_url={short_url}')
+            insert_to_db(short_url, args.url)
+            # save to DB short and long links. If link exists -> error!
+
+    else:
+        long_url = get_from_db(args.url)
+        # print long url from DB
+        print(f'long_url={long_url}')
