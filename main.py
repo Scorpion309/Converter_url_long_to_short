@@ -10,7 +10,7 @@ def get_short_link(long_link):
 
 
 if __name__ == '__main__':
-    db.do_query(db.tables)
+    db.create_tables()
     args = parse.get_command()
     get_short_link(args.url)
 
