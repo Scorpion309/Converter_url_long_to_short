@@ -20,12 +20,14 @@ def do_query(query, *values, select=False):
     try:
         sqlite_connection = sqlite3.connect('links.db')
         # print('Connection to links.db successful')
+
         cursor = sqlite_connection.cursor()
+
         cursor.execute(query, values)
         if not select:
             queryid = cursor.lastrowid
         else:
-            results = cursor.fetchall()
+            results = cursor.fetchone()
         cursor.close()
 
     except sqlite3.Error as error:
@@ -34,7 +36,10 @@ def do_query(query, *values, select=False):
         sqlite_connection.commit()
         # print('Database query completed successfully')
         if select:
-            return results
+            if results:
+                return results[0]
+            else:
+                return results
         else:
             return queryid
     finally:
@@ -43,13 +48,12 @@ def do_query(query, *values, select=False):
 
 
 def insert_to_db(short_link, long_link):
-    id_to_save = []
     query = 'INSERT INTO urls (is_short, url) VALUES (TRUE, ?);'
-    id_to_save.append(do_query(query, short_link))
+    short_url_id = do_query(query, short_link)
     query = 'INSERT INTO urls (is_short, url) VALUES (FALSE, ?);'
-    id_to_save.append(do_query(query, long_link))
+    long_url_id = do_query(query, long_link)
     query = 'INSERT INTO links (short_url_id, url_id) VALUES (?, ?);'
-    do_query(query, id_to_save[0], id_to_save[1])
+    do_query(query, short_url_id, long_url_id)
 
 
 def get_short_url_id_from_db(short_link):
