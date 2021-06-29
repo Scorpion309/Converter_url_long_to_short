@@ -9,7 +9,7 @@ def get_short_link(long_link):
     return short_link
 
 
-def if_not_exists_insert(short_link):
+def insert_short_link(short_link):
     short_url_id = db.get_short_url_id_from_db(short_link)
     if not short_url_id:
         db.insert_to_db(short_link, args.url)
@@ -20,7 +20,7 @@ def if_not_exists_insert(short_link):
         else:
             print(f'short_url={short_link}')
 
-def if_exists_print(short_link):
+def print_long_link(short_link):
     short_url_id = db.get_short_url_id_from_db(short_link)
     if short_url_id:
         long_url_id = db.get_long_url_id_from_db(short_url_id)
@@ -37,8 +37,8 @@ if __name__ == '__main__':
 
     if args.generate:
         if args.short_url:
-            if_not_exists_insert(args.short_url)
+            insert_short_link(args.short_url)
         else:
-            if_not_exists_insert(get_short_link(args.url))
+            insert_short_link(get_short_link(args.url))
     else:
-        if_exists_print(args.url)
+        print_long_link(args.url)
