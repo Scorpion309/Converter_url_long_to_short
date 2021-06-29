@@ -20,16 +20,13 @@ def do_query(query, *values, select=False):
     try:
         sqlite_connection = sqlite3.connect('links.db')
         # print('Connection to links.db successful')
-
         cursor = sqlite_connection.cursor()
-
         cursor.execute(query, values)
         if not select:
             queryid = cursor.lastrowid
         else:
             results = cursor.fetchone()
         cursor.close()
-
     except sqlite3.Error as error:
         print("Connection error!", error)
     else:

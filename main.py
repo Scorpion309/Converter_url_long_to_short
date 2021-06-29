@@ -9,6 +9,18 @@ def get_short_link(long_link):
     return short_link
 
 
+def if_not_exists_insert(short_link):
+    short_url_id = db.get_short_url_id_from_db(short_link)
+    if not short_url_id:
+        db.insert_to_db(short_link, args.url)
+        print(f'short_url={short_link}')
+    else:
+        if args.generate:
+            print(f'Error! Short_url={short_link} is already exists in db!')
+        else:
+            print(f'short_url={short_link}')
+
+
 if __name__ == '__main__':
     db.create_tables()
     args = parse.get_command()
@@ -16,26 +28,11 @@ if __name__ == '__main__':
 
     if args.generate:
         if args.short_url:
-            short_url = args.short_url
-
-            short_url_id = db.get_short_url_id_from_db(short_url)
-            if not short_url_id:
-                db.insert_to_db(short_url, args.url)
-                print(f'short_url={short_url}')
-            else:
-                print(f'Error! Short_url={short_url} is already exists in db!')
-
+            if_not_exists_insert(args.short_url)
         else:
-            short_url = get_short_link(args.url)
-            short_url_id = db.get_short_url_id_from_db(short_url)
-            if not short_url_id:
-                db.insert_to_db(short_url, args.url)
-                print(f'short_url={short_url}')
-            else:
-                print(f'short_url={short_url}')
+            if_not_exists_insert(get_short_link(args.url))
     else:
-        short_url = args.url
-        short_url_id = db.get_short_url_id_from_db(short_url)
+        short_url_id = db.get_short_url_id_from_db(args.url)
         if short_url_id:
             long_url_id = db.get_long_url_id_from_db(short_url_id)
             long_url = db.get_url_from_db(long_url_id)
