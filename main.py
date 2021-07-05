@@ -1,7 +1,13 @@
 import shortuuid
+import validators
 
 import db
 import parse
+
+
+def validate_url(value):
+    if validators.url(value):
+        return True
 
 
 def get_short_link(long_link):
@@ -20,6 +26,7 @@ def insert_short_link(short_link):
         else:
             print(f'short_url={short_link}')
 
+
 def get_long_link(short_link):
     short_url_id = db.get_short_url_id_from_db(short_link)
     if short_url_id:
@@ -35,12 +42,12 @@ def get_long_link(short_link):
 if __name__ == '__main__':
     db.create_tables()
     args = parse.get_command()
-    get_short_link(args.url)
-
-    if args.generate:
+    if validate_url(args.url) and args.generate:
         if args.short_url:
             insert_short_link(args.short_url)
         else:
             insert_short_link(get_short_link(args.url))
-    else:
+    elif not args.generate:
         get_long_link(args.url)
+    else:
+        print('Error! Url is not correct! Try again!')

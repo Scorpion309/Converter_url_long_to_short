@@ -7,5 +7,10 @@
 {% block body %}
 <h1>Сократите ссылку в одик клик!</h1>
 Просто введите нужный url в поле ниже:
-
+<div>
+    <form method="post">
+        <input type="text" name="long_url" id="long_url" placeholder="Please, enter long url to this form!">
+        <input type="submit" value="Get short url!">
+    </form>
+</div>
 {% endblock %}
