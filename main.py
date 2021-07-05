@@ -6,8 +6,7 @@ import parse
 
 
 def validate_url(value):
-    if validators.url(value):
-        return True
+    return validators.url(value)
 
 
 def get_short_link(long_link):
