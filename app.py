@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 
 import utils
 
@@ -9,9 +9,20 @@ app = Flask(__name__)
 def index():
     if request.method == "POST":
         long_url = request.form['long_url']
-        short_url = utils.get_short_link(long_url)
-        if utils.insert_short_link(short_url, long_url):
-            return short_url
+        if utils.validate_url(long_url):
+            if request.form['short_url']:
+                short_url = request.form['short_url']
+            else:
+                short_url = utils.get_short_link(long_url)
+
+            if utils.insert_short_link(short_url, long_url):
+                return short_url
+            elif request.form['short_url']:
+                return f'Error! Short_url {request.form["short_url"]} already exists in db! Please, type another!'
+            else:
+                return short_url
+        else:
+            return 'Error! You type incorrect url! Please, try again!'
 
     return render_template('index.html')
 
@@ -19,7 +30,10 @@ def index():
 @app.route('/<string:short_link>')
 def short_url(short_link):
     long_link = utils.get_long_link(short_link)
-    return long_link
+    if long_link:
+        return redirect(long_link)
+    else:
+        return 'Error! This short url is not exists in db! Please, enter correct url!'
 
 
 if __name__ == '__main__':

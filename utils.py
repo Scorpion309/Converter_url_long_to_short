@@ -26,6 +26,6 @@ def get_long_link(short_link):
     if short_url_id:
         long_url_id = db.get_long_url_id_from_db(short_url_id)
         long_url = db.get_url_from_db(long_url_id)
-        return f'long_url={long_url}'
+        return long_url
     else:
-        return f'Error! Long_url for short_url={short_link} is not exists in db!'
+        return False

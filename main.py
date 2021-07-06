@@ -13,6 +13,7 @@ if __name__ == '__main__':
             utils.insert_short_link(utils.get_short_link(args.url), args.url)
             print(f'short_url={utils.get_short_link(args.url)}')
     elif not args.generate:
-        print(utils.get_long_link(args.url))
+        if not utils.get_long_link(args.url):
+            print(f'Error! Long_url for short_url={args.url} is not exists in db!')
     else:
         print('Error! Url is not correct! Try again!')
