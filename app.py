@@ -10,8 +10,8 @@ def index():
     if request.method == "POST":
         long_url = request.form['long_url']
         short_url = utils.get_short_link(long_url)
-        return short_url
-        utils.insert_short_link(short_url, long_url)
+        if utils.insert_short_link(short_url, long_url):
+            return short_url
 
     return render_template('index.html')
 
