@@ -18,7 +18,7 @@ def create_tables():
 
 def do_query(query, *values, select=False):
     try:
-        sqlite_connection = sqlite3.connect('links.db')
+        sqlite_connection = sqlite3.connect(r'C:\Users\ALIAKSANDR\PycharmProjects\Short_urls\links.db')
         # print('Connection to links.db successful')
         cursor = sqlite_connection.cursor()
         cursor.execute(query, values)
@@ -71,15 +71,4 @@ def get_url_from_db(id):
     return results
 
 
-def print_links():
-    """query = 'SELECT * FROM links;'
-    results = do_query(query, select=True)
-    [print(result) for result in results]"""
-    pass
-
-
-def print_urls():
-    """query = 'SELECT * FROM urls;'
-    results = do_query(query, select=True)
-    [print(result) for result in results]"""
-    pass
+create_tables()
