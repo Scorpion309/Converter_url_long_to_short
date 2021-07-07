@@ -1,16 +1,17 @@
 {% extends 'body.html' %}
 
 {% block title %}
-Сервис по сокращению ссылок
+Short url by one click
 {% endblock %}
 
 {% block body %}
-<h1>Сократите ссылку в одик клик!</h1>
-Просто введите нужный url в поле ниже:
+<h1>Long url to short by one click!</h1>
 <div>
     <form method="post">
-        <input type="text" name="long_url" id="long_url" placeholder="Please, enter long url to this form!">
-        <input type="text" name="short_url" id="short_url" placeholder="Please, enter short url to this form if you want save this short url for long url!">
+        <label>Please, enter long url to this form!</label>
+        <br><input type="text" name="long_url" id="long_url" width="50"></br>
+        <label>Please, enter short url to this form if you want to save this short url for long url!</label>
+        <br><input type="text" name="short_url" id="short_url" placeholder="optional field"></br>
         <input type="submit" value="Get short url!">
     </form>
 </div>

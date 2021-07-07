@@ -16,14 +16,13 @@ def index():
                 short_url = utils.get_short_link(long_url)
 
             if utils.insert_short_link(short_url, long_url):
-                return short_url
+                return short_url, 201
             elif request.form['short_url']:
-                return f'Error! Short_url {request.form["short_url"]} already exists in db! Please, type another!'
+                return f'Error! Short_url {request.form["short_url"]} already exists in db! Please, type another!', 400
             else:
-                return short_url
+                return short_url, 201
         else:
-            return 'Error! You type incorrect url! Please, try again!'
-
+            return 'Error! You type incorrect url! Please, try again!', 400
     return render_template('index.html')
 
 
@@ -33,7 +32,7 @@ def short_url(short_link):
     if long_link:
         return redirect(long_link)
     else:
-        return 'Error! This short url is not exists in db! Please, enter correct url!'
+        return 'Error! This short url is not exists in db! Please, enter correct url!', 404
 
 
 if __name__ == '__main__':
