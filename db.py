@@ -18,7 +18,7 @@ def create_tables():
 
 def do_query(query, *values, select=False):
     try:
-        sqlite_connection = sqlite3.connect(r'C:\Users\ALIAKSANDR\PycharmProjects\Short_urls\links.db')
+        sqlite_connection = sqlite3.connect(r'.\links.db')
         # print('Connection to links.db successful')
         cursor = sqlite_connection.cursor()
         cursor.execute(query, values)
