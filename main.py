@@ -1,8 +1,10 @@
 import parse
 import utils
+import db
 
 if __name__ == '__main__':
     args = parse.get_command()
+    db.create_tables()
     if utils.validate_url(args.url) and args.generate:
         if args.short_url:
             if utils.insert_short_link(args.short_url, args.url):

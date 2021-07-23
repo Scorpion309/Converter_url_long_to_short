@@ -1,7 +1,7 @@
 import shortuuid
 import validators
 
-import db
+import postgresql_db as db
 
 
 def insert_short_link(short_link, long_link):

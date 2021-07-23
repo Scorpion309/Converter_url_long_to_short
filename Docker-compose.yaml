@@ -4,3 +4,12 @@ services:
     build: .
     ports:
       - "5000:5000"
+  postgres:
+    build: .
+    environment:
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_DB=postgresql_links
+    ports:
+      - "5432:5432"
+    restart: always

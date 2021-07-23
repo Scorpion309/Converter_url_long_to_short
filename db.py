@@ -1,6 +1,7 @@
 import sqlite3
 
 
+
 def create_tables():
     table_links = '''CREATE TABLE IF NOT EXISTS links(
                                         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -69,6 +70,3 @@ def get_url_from_db(id):
     query = 'SELECT url FROM urls WHERE id=? AND is_short=FALSE;'
     results = do_query(query, id, select=True)
     return results
-
-
-create_tables()
